@@ -1,0 +1,107 @@
+html,
+body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-div {
+  height: 100%;
+  border: 0%;
+  border-color: black;
+  border-style: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(56, 8, 110);
+  cursor: pointer;
+}
+
+li {
+  float: left;
+}
+
+li a,
+.dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover,
+.dropdown:hover .dropbtn {
+  background-color: rgb(134, 106, 209);
+}
+
+li .dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(134, 106, 209);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: whitesmoke;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: rgb(56, 8, 110);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Here Animation Starts*/
+
+.dropdown .dropdown-content {
+  transition: opacity 0.2s 0.01s ease-in-out, left 0.2s 0.1s ease-out,
+    visibility 0.1s 0.1s linear;
+  -o-transition: opacity 0.2s 0.01s ease-in-out, left 0.2s 0.1s ease-out,
+    visibility 0.1s 0.1s linear;
+  -moz-transition: opacity 0.2s 0.01s ease-in-out, left 0.2s 0.1s ease-out,
+    visibility 0.1s 0.1s linear;
+  -webkit-transition: opacity 0.2s 0.01s ease-in-out, left 0.2s 0.1s ease-out,
+    visibility 0.1s 0.1s linear;
+}
+
+.dropdown :hover > ul {
+  visibility: visible;
+  position: absolute;
+  left: -232px;
+}
+
+.dropdown a {
+  transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+}
+
+#drawing-area {
+  height: 100%;
+  margin: 0%;
+}
+
+.canvas {
+  border: 0.1px;
+  border-color: rgb(0, 0, 0);
+  border-style: solid;
+  height: 90%;
+  width: 100%;
+}
