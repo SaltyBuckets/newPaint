@@ -5,7 +5,7 @@ class Square {
     this.color = color;
     this.boxSize = boxSize;
     this.overBox = false;
-    this.locked = false;
+    this.locked = true;
     this.xOffset = 0.0;
     this.yOffset = 0.0;
   
@@ -14,18 +14,20 @@ class Square {
 
   update() {
     if (
-      mouseX > this.bx - this.boxSize &&
-      mouseX < this.bx + this.boxSize &&
-      mouseY > this.by - this.boxSize &&
-      mouseY < this.by + this.boxSize
+      mouseX > this.bx - this.boxSize/2 &&
+      mouseX < this.bx + this.boxSize/2&&
+      mouseY > this.by - this.boxSize/2&&
+      mouseY < this.by + this.boxSize/2
     ) {
-      this.overBox = true;
       isDrawing = false;
+
+      this.overBox = true;
       if (!this.locked) {
         stroke(this.color);
         noFill();
       }
     } else {
+
       stroke(this.color);
       noFill();
       this.overBox = false;

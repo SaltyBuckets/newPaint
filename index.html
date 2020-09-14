@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js" integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA==" crossorigin="anonymous"></script>
-  <script src="sketch.js"></script>
-  <script src="./shapes.js"></script>
+  <script defer src="sketch.js"></script>
+  <script defer src="./shapes.js"></script>
 </head>
 <body onload="Alertfunction()">
     
@@ -36,10 +36,10 @@
             <li class="dropdown">
                 <a class="dropbtn">Shapes</a>
                 <div class="dropdown-content">
-                     <a onclick="">Square <i class="fa fa-square-o" aria-hidden="true"></i></a>
-                     <a onclick="">Circle <i class="fa fa-circle-o" aria-hidden="true"></i></a>
-                     <a onclick="">Arrow <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                     <a onclick="" title="click and drag to draw">Array <i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i></a>
+                     <a onclick="activateTool('square')">Square <i class="fa fa-square-o" aria-hidden="true"></i></a>
+                     <a onclick="activateTool('circle')">Circle <i class="fa fa-circle-o" aria-hidden="true"></i></a>
+                     <a onclick="activateTool('arrow')">Arrow <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                     <a onclick="activateTool('array')" title="click and drag to draw">Array <i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i></a>
                
                 </div>
               </li>

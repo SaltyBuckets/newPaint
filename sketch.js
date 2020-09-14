@@ -6,11 +6,15 @@ let circles = [];
 let arrows = [];
 
 let isDrawing = false;
+let currentTool = "brush"; 
+let lockedPt = new p5.Vector(-1, 0);
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
 
 let colorPicker;
+
+let currentSquare;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -32,12 +36,28 @@ function draw() {
   brushColor = colorPicker.value();
 
   if (isDrawing) {
-    let point = {
-      x: mouseX,
-      y: mouseY,
-      color: colorPicker.value(),
-    };
-    currentPath.push(point);
+    if (currentTool == "brush") {
+      let point = {
+        x: mouseX,
+        y: mouseY,
+        color: brushColor,
+      };
+      currentPath.push(point);
+    }
+    else if (currentTool == "eraser") {
+      console.log("eraser");
+      brushColor = backgroundColor;
+      let point = {
+        x: mouseX,
+        y: mouseY,
+        color: brushColor,
+      };
+      currentPath.push(point);
+    }
+    else if (currentTool == "square") {
+      console.log("square");
+      currentSquare.boxSize = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);       
+    }
   }
 
   strokeWeight(4);
@@ -58,16 +78,36 @@ function draw() {
     squares[i].update();
     squares[i].show();
   }
+  
+  if (currentSquare) {
+    
+    if (currentSquare.boxSize > 3) {
+      currentSquare.update();
+      currentSquare.show();
+    }
+    }
 }
 
 function startPath() {
   isDrawing = true;
+  lockedPt.x = mouseX;
+  lockedPt.y = mouseY;
+  currentSquare = new Square(lockedPt.x,lockedPt.y,0, brushColor); 
+
+
+
   currentPath = [];
   drawing.push(currentPath);
+
+
 }
 
 function endPath() {
+
   isDrawing = false;
+  if(currentSquare.boxSize>3)
+  squares.push(currentSquare);
+  
 }
 
 function clearDrawing() {
@@ -83,11 +123,17 @@ function redo() {
   if (savedPath !== undefined) drawing.push(savedPath);
 }
 
+function activateTool(tool) {
+  currentTool = tool;
+}
+
+
+
 function mousePressed() {
   for (let i = 0; i < squares.length; i++) {
     if (squares[i].overBox) {
       squares[i].locked = true;
-      fill(255, 255, 255);
+      isDrawing = false;
     } else {
       squares[i].locked = false;
     }
