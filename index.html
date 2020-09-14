@@ -1,93 +1,107 @@
-  <script>
+<script>
   function Alertfunction() {
     // alert("This page is optimised for DESKTOP. Many Features May not work in other devices");
   }
-</script>  
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    
-    <script src="https://kit.fontawesome.com/cd51d46bae.js" crossorigin="anonymous"></script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teaching Tool</title>
-    <link rel="stylesheet" href="./style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js" integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA==" crossorigin="anonymous"></script>
-  <script defer src="sketch.js"></script>
-  <script defer src="./shapes.js"></script>
+  <script src="https://kit.fontawesome.com/cd51d46bae.js" crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teaching Tool</title>
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"
+    integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA=="
+    crossorigin="anonymous"></script>
+  <script src="sketch.js"></script>
+  <script src="./shapes.js"></script>
 </head>
+
 <body onload="Alertfunction()">
-    
-    <div class="main-div">
 
-        <ul>
+  <div class="main-div">
 
-            <li class="dropdown">
-              <a class="dropbtn">Tools</a>
-              <div class="dropdown-content">
-                <a onclick="myInputEvent()">Text <i class="fa fa-font" aria-hidden="true"></i></a>
-                <a onclick="">Eraser <i class="fa fa-eraser" aria-hidden="true"></i></a>
-              </div>
-            </li>
+    <ul>
 
-            <li class="dropdown">
-                <a class="dropbtn">Shapes</a>
-                <div class="dropdown-content">
-                     <a onclick="activateTool('square')">Square <i class="fa fa-square-o" aria-hidden="true"></i></a>
-                     <a onclick="activateTool('circle')">Circle <i class="fa fa-circle-o" aria-hidden="true"></i></a>
-                     <a onclick="activateTool('arrow')">Arrow <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                     <a onclick="activateTool('array')" title="click and drag to draw">Array <i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i></a>
-               
-                </div>
-              </li>
-
-              <li class="dropdown" id = "brushSizeDropdown">
-                <a class="dropbtn" onclick="">Border Size</a>
-                <div class="dropdown-content"></div>   
-              </li>
-
-              <li class="dropdown" >
-                <a class="dropbtn" id = "colorSelectionDropdown" for="favcolor">Color Selection <input type="color" id="favcolor" name="favcolor" value="#ed225d" style="cursor: grab;"></a>
-                <div class="dropdown-content"></div>           
-              </li>
-
-              <li class="dropdown">
-                <a class="dropbtn" onclick="save()">Download Image <i class="fas fa-file-download"></i> </a>
-                <div class="dropdown-content"></div>   
-              </li>
-
-              <li class="dropdown">
-                <a class="dropbtn" onclick="clearDrawing()">Clear Screen <i class="fa fa-trash" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-content"></div>   
-              </li>
-  <li style="float: right;" class="dropdown" id = "brushSizeDropdown">
-                <a class="dropbtn" onclick="redo()" title="redo"><i class="fa fa-repeat" aria-hidden="true"></i></a>
-                <div class="dropdown-content"></div>   
-              </li>
-              <li style="float: right;" class="dropdown" id = "brushSizeDropdown" >
-                <a class="dropbtn" onclick="undo()" title="undo" ><i class="fa fa-undo" aria-hidden="true"></i></a>
-                <div class="dropdown-content"></div>   
-              </li>
-
-            
-              
-              <li class="dropdown">
-                <a class="dropbtn">Credits <i class="fa fa-address-book" aria-hidden="true"></i></a>
-                <div class="dropdown-content">
-                     <a href="https://github.com/SaltyBuckets" target="_blank">Sanchit Verma(IT 3rd Sem)</a>
-                     <a href="https://github.com/VibhorJaiswal" target="_blank">Vibhor Jaiswal(IT 3rd Sem)</a>
-
-        </ul>
-
-        <div id="canvasContainer"  class="canvas"></div>
-
-        <!-- <div id="drawing-area"></div> -->
+      <li class="dropdown">
+        <a class="dropbtn">Tools</a>
+        <div class="dropdown-content">
+          <a onclick="textInput()">Text <i class="fa fa-font" aria-hidden="true"></i></a>
+          <a onclick="activateTool('eraser')">Eraser <i class="fa fa-eraser" aria-hidden="true"></i></a>
+          <a onclick="activateTool('brush')">Brush <i class="fa fa-paint-brush" aria-hidden="true"></i></a>
         </div>
-    </div>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropbtn">Shapes</a>
+        <div class="dropdown-content">
+          <a onclick="">Square <i class="fa fa-square-o" aria-hidden="true"></i></a>
+          <a onclick="">Circle <i class="fa fa-circle-o" aria-hidden="true"></i></a>
+          <a onclick="">Arrow <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            <a onclick="" title="click and drag to draw">Array <i class="fa fa-square-o" aria-hidden="true"></i><i
+                class="fa fa-square-o" aria-hidden="true"></i><i class="fa fa-square-o" aria-hidden="true"></i></a>
+
+        </div>
+      </li>
+
+      <li class="dropdown" id="brushSizeDropdown">
+        <a class="dropbtn" onclick="">Border Size</a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropbtn" id="colorSelectionDropdown" for="favcolor">Color Selection <input type="color" id="favcolor"
+            name="favcolor" value="#ed225d" style="cursor: grab;"></a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropbtn" onclick="saveImage()">Download Image <i class="fas fa-file-download"></i> </a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropbtn" onclick="clearDrawing()">Clear Screen <i class="fa fa-trash" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li style="float: right;" class="dropdown" id="brushSizeDropdown">
+        <a class="dropbtn" onclick="redo()" title="redo"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li style="float: right;" class="dropdown" id="brushSizeDropdown">
+        <a class="dropbtn" onclick="undo()" title="undo"><i class="fa fa-undo" aria-hidden="true"></i></a>
+        <div class="dropdown-content"></div>
+      </li>
+
+      <li style="float: right;" class="dropdown" id="brushSizeDropdown">
+        <a class="dropbtn" onclick="" title="Advanced Setting"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+        <div class="dropdown-content"></div>
+      </li>
+
+
+      <li class="dropdown">
+        <a class="dropbtn">Credits <i class="fa fa-address-book" aria-hidden="true"></i></a>
+        <div class="dropdown-content">
+          <a href="https://github.com/SaltyBuckets" target="_blank">Sanchit Verma(IT 3rd Sem)</a>
+          <a href="https://github.com/VibhorJaiswal" target="_blank">Vibhor Jaiswal(IT 3rd Sem)</a>
+
+    </ul>
+
+    <div id="canvasContainer" class="canvas"></div>
+
+    <!-- <div id="drawing-area"></div> -->
+  </div>
+  </div>
 
 </body>
+
 </html>
