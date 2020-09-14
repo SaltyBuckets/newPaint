@@ -13,11 +13,10 @@ let tool;
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
-let tool;
+
 let colorPicker;
-let eraserActive = false;
-let slider;
-let brushSize;
+
+let currentSquare;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -41,7 +40,6 @@ function setup() {
   slider.parent('brushSizeDropdown');
   slider.position(0, 0, 'relative');
 }
-
 
 function draw() {
   background(backgroundColor);
@@ -138,7 +136,7 @@ function mousePressed() {
   for (let i = 0; i < squares.length; i++) {
     if (squares[i].overBox) {
       squares[i].locked = true;
-      fill(255, 255, 255);
+      isDrawing = false;
     } else {
       squares[i].locked = false;
     }
@@ -159,26 +157,5 @@ function mouseDragged() {
 function mouseReleased() {
   for (let i = 0; i < squares.length; i++) {
     squares[i].locked = false;
-  }
-}
-
-function saveImage() {
-  var name = prompt("File Name:", "C Class");
-  if(name != null)
-   saveCanvas(name, "jpg");
- }
-
-
- function activateTool(tool){
-
-  if(tool=='brush'){
-    brushColor = colorPicker.value();
-    eraserActive=false;
-    
-  }
- else if(tool=='eraser'){
-   brushColor = backgroundColor;
-    eraserActive=true;
-    
   }
 }
