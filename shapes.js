@@ -1,9 +1,10 @@
 class Square {
-  constructor(x, y, boxSize,color) {
+  constructor(x, y, boxSize,color,stroke) {
     this.bx = x;
     this.by = y;
-    this.color = color;
     this.boxSize = boxSize;
+    this.color = color;
+    this.stroke = stroke;
     this.overBox = false;
     this.locked = true;
     this.xOffset = 0.0;
@@ -14,10 +15,10 @@ class Square {
 
   update() {
     if (
-      mouseX > this.bx - this.boxSize/2 &&
-      mouseX < this.bx + this.boxSize/2&&
-      mouseY > this.by - this.boxSize/2&&
-      mouseY < this.by + this.boxSize/2
+      mouseX > this.bx - (this.boxSize-this.boxSize/3) &&
+      mouseX < this.bx + (this.boxSize-this.boxSize/3) &&
+      mouseY > this.by - (this.boxSize-this.boxSize/3) &&
+      mouseY < this.by + (this.boxSize-this.boxSize/3)
     ) {
       isDrawing = false;
 
@@ -35,6 +36,7 @@ class Square {
   }
 
   show() {
+    strokeWeight(this.stroke);
     rect(this.bx, this.by, this.boxSize, this.boxSize);
   }
 }
