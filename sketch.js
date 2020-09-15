@@ -7,14 +7,14 @@ let arrows = [];
 let texts = [];
 
 let isDrawing = false;
-let currentTool = 'brush';
+let currentTool = "brush";
 let lockedPt = new p5.Vector(-1, 0);
-let tool;
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
 
 let colorPicker;
+let floatImg;
 
 let currentSquare;
 
@@ -27,8 +27,6 @@ function setup() {
   canvas.mouseReleased(endPath);
   canvas.mouseOut(endPath);
 
-  // squares.push(new Square(width / 2, height / 2, 50, brushColor));  
-
   colorPicker = select('#favcolor');
 
   rectMode(RADIUS);
@@ -39,6 +37,8 @@ function setup() {
 
   slider.parent('brushSizeDropdown');
   slider.position(0, 0, 'relative');
+
+  floatImg = select('#floatImg');
 }
 
 function draw() {
@@ -53,7 +53,7 @@ function draw() {
         x: mouseX,
         y: mouseY,
         color: brushColor,
-        size: brushSize
+        size: brushSize,
       };
       currentPath.push(point);
     } else if (currentTool == 'eraser') {
@@ -63,8 +63,7 @@ function draw() {
         x: mouseX,
         y: mouseY,
         color: brushColor,
-        size: brushSize
-
+        size: brushSize,
       };
       currentPath.push(point);
     } else if (currentTool == 'square') {
@@ -82,7 +81,7 @@ function draw() {
     for (let j = 0; j < path.length; j++) {
       vertex(path[j].x, path[j].y);
       stroke(path[j].color);
-      strokeWeight(path[j].size)
+      strokeWeight(path[j].size);
     }
     endShape();
   }
@@ -112,7 +111,7 @@ function startPath() {
 
 function endPath() {
   isDrawing = false;
-  if (currentSquare.boxSize > 3) squares.push(currentSquare);
+  if (currentSquare) if (currentSquare.boxSize > 3) squares.push(currentSquare);
 }
 
 function clearDrawing() {
@@ -130,6 +129,26 @@ function redo() {
 
 function activateTool(tool) {
   currentTool = tool;
+  floatImg.elt.className = '';
+
+  if (tool == 'brush') 
+    floatImg.addClass('fa fa-paint-brush');
+
+  else if (tool == 'eraser') 
+    floatImg.addClass('fa fa-eraser');
+  
+  else if (tool == 'square') 
+    floatImg.addClass('fa fa-square-o');
+
+  else if (tool == 'circle') 
+    floatImg.addClass('fa fa-circle-o');
+
+  else if (tool == 'arrow') 
+    floatImg.addClass('fa fa-arrow-right');
+
+  else if (tool == 'array') 
+    floatImg.addClass('fa fa-square-o'); //TODO-----------
+
 }
 
 function mousePressed() {
