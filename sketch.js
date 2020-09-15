@@ -17,6 +17,7 @@ let colorPicker;
 let floatImg;
 
 let currentSquare;
+let currentCircle;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -70,6 +71,11 @@ function draw() {
       console.log('square');
       currentSquare.boxSize = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
     }
+
+    else if (currentTool == "circle") { 
+      console.log("circle");
+      currentCircle.diameter = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
+    }
   }
 
   noFill();
@@ -90,11 +96,21 @@ function draw() {
     squares[i].update();
     squares[i].show();
   }
-
+  for (let i = 0; i < circles.length; i++) {
+    circles[i].update();
+    circles[i].show();
+  }
   if (currentSquare) {
     if (currentSquare.boxSize > 3) {
       currentSquare.update();
       currentSquare.show();
+    }
+  }
+
+  if (currentCircle) {
+    if (currentCircle.diameter > 3) {
+      currentCircle.update();
+      currentCircle.show();
     }
   }
 }
@@ -104,7 +120,7 @@ function startPath() {
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
   currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
-
+  currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -112,6 +128,8 @@ function startPath() {
 function endPath() {
   isDrawing = false;
   if (currentSquare) if (currentSquare.boxSize > 3) squares.push(currentSquare);
+  if (currentCircle) if (currentCircle.diameter > 3) circles.push(currentCircle);
+
 }
 
 function clearDrawing() {
@@ -162,6 +180,17 @@ function mousePressed() {
     squares[i].xOffset = mouseX - squares[i].bx;
     squares[i].yOffset = mouseY - squares[i].by;
   }
+
+  for (let i = 0; i < circles.length; i++) {
+    if (circles[i].overBox) {
+      circles[i].locked = true;
+      isDrawing = false;
+    } else {
+      circles[i].locked = false;
+    }
+    circles[i].xOffset = mouseX - circles[i].bx;
+    circles[i].yOffset = mouseY - circles[i].by;
+  }
 }
 
 function mouseDragged() {
@@ -171,10 +200,19 @@ function mouseDragged() {
       squares[i].by = mouseY - squares[i].yOffset;
     }
   }
+  for (let i = 0; i < circles.length; i++) {
+    if (circles[i].locked) {
+      circles[i].bx = mouseX - circles[i].xOffset;
+      circles[i].by = mouseY - circles[i].yOffset;
+    }
+  }
 }
 
 function mouseReleased() {
   for (let i = 0; i < squares.length; i++) {
     squares[i].locked = false;
+  }
+  for (let i = 0; i < circles.length; i++) {
+    circles[i].locked = false;
   }
 }
