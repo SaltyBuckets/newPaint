@@ -5,34 +5,11 @@ class Square {
     this.boxSize = boxSize;
     this.color = color;
     this.stroke = stroke;
-    this.overBox = false;
-    this.locked = true;
-    this.xOffset = 0.0;
-    this.yOffset = 0.0;
-  
-
   }
 
   update() {
-    if (
-      mouseX > this.bx - (this.boxSize-this.boxSize/3) &&
-      mouseX < this.bx + (this.boxSize-this.boxSize/3) &&
-      mouseY > this.by - (this.boxSize-this.boxSize/3) &&
-      mouseY < this.by + (this.boxSize-this.boxSize/3)
-    ) {
-      isDrawing = false;
-
-      this.overBox = true;
-      if (!this.locked) {
-        stroke(this.color);
-        noFill();
-      }
-    } else {
-
-      stroke(this.color);
-      noFill();
-      this.overBox = false;
-    }
+    stroke(this.color);
+    noFill();
   }
 
   show() {
@@ -49,34 +26,9 @@ class Circle {
     this.diameter = diameter;
     this.color = color;
     this.stroke = stroke;
-    this.overBox = false;
-    this.locked = true;
-    this.xOffset = 0.0;
-    this.yOffset = 0.0;
-  
-
   }
 
   update() {
-    if (
-      mouseX > this.bx - (this.diameter-this.diameter/3) &&
-      mouseX < this.bx + (this.diameter-this.diameter/3) &&
-      mouseY > this.by - (this.diameter-this.diameter/3) &&
-      mouseY < this.by + (this.diameter-this.diameter/3)
-    ) {
-      isDrawing = false;
-
-      this.overBox = true;
-      if (!this.locked) {
-        stroke(this.color);
-        noFill();
-      }
-    } else {
-
-      stroke(this.color);
-      noFill();
-      this.overBox = false;
-    }
   }
 
   show() {
@@ -84,4 +36,3 @@ class Circle {
     circle(this.bx, this.by, this.diameter);
   }
 }
-
