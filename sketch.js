@@ -40,6 +40,8 @@ function setup() {
   slider.position(0, 0, 'relative');
 
   floatImg = select('#floatImg');
+
+  rectMode(CORNER);
 }
 
 function draw() {
@@ -113,13 +115,17 @@ function draw() {
       currentCircle.show();
     }
   }
+
+
+  
+
 }
 
 function startPath() {
   isDrawing = true;
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
-  currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
+  currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize,0, 0);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentPath = [];
   drawing.push(currentPath);
@@ -165,54 +171,6 @@ function activateTool(tool) {
     floatImg.addClass('fa fa-arrow-right');
 
   else if (tool == 'array') 
-    floatImg.addClass('fa fa-square-o'); //TODO-----------
+    floatImg.addClass('fa fa-square-o');
 
-}
-
-function mousePressed() {
-  for (let i = 0; i < squares.length; i++) {
-    if (squares[i].overBox) {
-      squares[i].locked = true;
-      isDrawing = false;
-    } else {
-      squares[i].locked = false;
-    }
-    squares[i].xOffset = mouseX - squares[i].bx;
-    squares[i].yOffset = mouseY - squares[i].by;
-  }
-
-  for (let i = 0; i < circles.length; i++) {
-    if (circles[i].overBox) {
-      circles[i].locked = true;
-      isDrawing = false;
-    } else {
-      circles[i].locked = false;
-    }
-    circles[i].xOffset = mouseX - circles[i].bx;
-    circles[i].yOffset = mouseY - circles[i].by;
-  }
-}
-
-function mouseDragged() {
-  for (let i = 0; i < squares.length; i++) {
-    if (squares[i].locked) {
-      squares[i].bx = mouseX - squares[i].xOffset;
-      squares[i].by = mouseY - squares[i].yOffset;
-    }
-  }
-  for (let i = 0; i < circles.length; i++) {
-    if (circles[i].locked) {
-      circles[i].bx = mouseX - circles[i].xOffset;
-      circles[i].by = mouseY - circles[i].yOffset;
-    }
-  }
-}
-
-function mouseReleased() {
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].locked = false;
-  }
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].locked = false;
-  }
 }
