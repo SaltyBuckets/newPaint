@@ -54,7 +54,6 @@ class Arrow {
   
   show() {
     strokeWeight(this.stroke);
-    console.log("inside show",this.lx, " ", this.ly);
     line(this.bx, this.by, this.lx, this.ly);
   }
 }

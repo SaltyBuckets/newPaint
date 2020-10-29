@@ -104,8 +104,7 @@ function draw() {
     circles[i].update();
     circles[i].show();
   }
-  for(let i = 0; i < arrows.length; i++)
-  {
+  for (let i = 0; i < arrows.length; i++) {
     arrows[i].update();
     arrows[i].show();
   }
@@ -147,7 +146,13 @@ function startPath() {
 
 function endPath() {
   isDrawing = false;
-  if (currentArrow) arrows.push(currentArrow);
+  if (currentTool == "arrow") {
+    if(currentArrow){
+      console.log("end");
+      arrows.push(currentArrow);
+    }
+  }
+
 
   if (currentTool == "square") {
     if (currentSquare) {
