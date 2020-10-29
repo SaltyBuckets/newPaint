@@ -7,8 +7,6 @@ class Square {
     this.boxSize = boxSize;
     this.color = color
     this.stroke = stroke;
-    console.log("inside constructor");
-    
   }
   
   update() {

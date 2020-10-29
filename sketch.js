@@ -115,7 +115,6 @@ function draw() {
       currentCircle.show();
     }
   }
-
 }
 
 function startPath() {
