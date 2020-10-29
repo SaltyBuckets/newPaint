@@ -104,6 +104,11 @@ function draw() {
     circles[i].update();
     circles[i].show();
   }
+  for(let i = 0; i < arrows.length; i++)
+  {
+    arrows[i].update();
+    arrows[i].show();
+  }
   if (currentSquare) {
     if (currentTool == "square") {
       currentSquare.lx = mouseX;
