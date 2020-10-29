@@ -18,7 +18,7 @@ class Square {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.bcx, this.bcy);
+    rect(this.bx, this.by,this.boxSize, this.bcx, this.bcy);
   }
 }
 

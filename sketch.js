@@ -116,16 +116,13 @@ function draw() {
     }
   }
 
-
-  
-
 }
 
 function startPath() {
   isDrawing = true;
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
-  currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize,0, 0);
+  currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize,mouseX, mouseY);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentPath = [];
   drawing.push(currentPath);
