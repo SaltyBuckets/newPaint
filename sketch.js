@@ -125,10 +125,12 @@ function draw() {
   }
 
   if (currentArrow) {
-    currentArrow.lx = mouseX;
-    currentArrow.ly = mouseY;
-    currentArrow.update();
-    currentArrow.show();
+    if (currentTool == "arrow") {
+      currentArrow.lx = mouseX;
+      currentArrow.ly = mouseY;
+      currentArrow.update();
+      currentArrow.show();
+    }
   }
 
 }
@@ -147,8 +149,7 @@ function startPath() {
 function endPath() {
   isDrawing = false;
   if (currentTool == "arrow") {
-    if(currentArrow){
-      console.log("end");
+    if (currentArrow) {
       arrows.push(currentArrow);
     }
   }
@@ -164,6 +165,7 @@ function endPath() {
     if (currentCircle.diameter > 3) circles.push(currentCircle);
 
   currentSquare = null;
+  currentArrow = null;
 }
 
 function clearDrawing() {
