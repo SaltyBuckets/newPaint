@@ -18,6 +18,7 @@ let floatImg;
 
 let currentSquare;
 let currentCircle;
+let currentArrow;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -73,10 +74,13 @@ function draw() {
       console.log('square');
       currentSquare.boxSize = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
     }
-
     else if (currentTool == "circle") { 
       console.log("circle");
       currentCircle.diameter = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
+    }
+    else if(currentTool == "arrow")
+    {
+      console.log("arrow");
     }
   }
 
@@ -115,6 +119,12 @@ function draw() {
       currentCircle.show();
     }
   }
+
+  if (currentArrow) {
+      currentCircle.update();
+      currentCircle.show();
+  }
+
 }
 
 function startPath() {
@@ -123,6 +133,7 @@ function startPath() {
   lockedPt.y = mouseY;
   currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize,mouseX, mouseY);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
+  currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize)
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -131,6 +142,7 @@ function endPath() {
   isDrawing = false;
   if (currentSquare) if (currentSquare.boxSize > 3) squares.push(currentSquare);
   if (currentCircle) if (currentCircle.diameter > 3) circles.push(currentCircle);
+  if (currentArrow) arrows.push(currentCircle);
 
 }
 

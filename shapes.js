@@ -38,3 +38,23 @@ class Circle {
     circle(this.bx, this.by, this.diameter);
   }
 }
+
+
+class Arrow {
+  constructor(x, y, color,stroke) {
+    this.bx = x;
+    this.by = y;
+    this.color = color
+    this.stroke = stroke;
+  }
+  
+  update() {
+    stroke(this.color);
+    line(this.bx, this.by, mouseX, mouseY);
+  }
+  
+  show() {
+    strokeWeight(this.stroke);
+  }
+}
+
