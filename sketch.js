@@ -1,3 +1,4 @@
+// @ts-nocheck
 let drawing = [];
 let currentPath = [];
 let saved = [];
@@ -7,7 +8,7 @@ let arrows = [];
 let texts = [];
 
 let isDrawing = false;
-let currentTool = "brush";
+let currentTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
 
 let backgroundColor = 150;
@@ -42,7 +43,7 @@ function setup() {
 
   floatImg = select('#floatImg');
 
-  rectMode(CORNER);
+  rectMode(CORNERS);
 }
 
 function draw() {
@@ -72,14 +73,11 @@ function draw() {
       currentPath.push(point);
     } else if (currentTool == 'square') {
       console.log('square');
-      currentSquare.boxSize = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
-    }
-    else if (currentTool == "circle") { 
-      console.log("circle");
+    } else if (currentTool == 'circle') {
+      console.log('circle');
       currentCircle.diameter = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
     }
-    else if(currentTool == "arrow")
-    {
+    else if (currentTool == "arrow") {
       console.log("arrow");
     }
   }
@@ -107,7 +105,9 @@ function draw() {
     circles[i].show();
   }
   if (currentSquare) {
-    if (currentSquare.boxSize > 3) {
+    if (currentTool == "square") {
+      currentSquare.lx = mouseX;
+      currentSquare.ly = mouseY;
       currentSquare.update();
       currentSquare.show();
     }
@@ -121,8 +121,10 @@ function draw() {
   }
 
   if (currentArrow) {
-      currentCircle.update();
-      currentCircle.show();
+    currentArrow.lx = mouseX;
+    currentArrow.ly = mouseY;
+    currentArrow.update();
+    currentArrow.show();
   }
 
 }
@@ -131,7 +133,7 @@ function startPath() {
   isDrawing = true;
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
-  currentSquare = new Square(lockedPt.x, lockedPt.y, 0, brushColor, brushSize,mouseX, mouseY);
+  currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize)
   currentPath = [];
@@ -140,10 +142,18 @@ function startPath() {
 
 function endPath() {
   isDrawing = false;
-  if (currentSquare) if (currentSquare.boxSize > 3) squares.push(currentSquare);
-  if (currentCircle) if (currentCircle.diameter > 3) circles.push(currentCircle);
-  if (currentArrow) arrows.push(currentCircle);
+  if (currentArrow) arrows.push(currentArrow);
 
+  if (currentTool == "square") {
+    if (currentSquare) {
+      squares.push(currentSquare);
+    }
+  }
+
+  if (currentCircle)
+    if (currentCircle.diameter > 3) circles.push(currentCircle);
+
+  currentSquare = null;
 }
 
 function clearDrawing() {
@@ -163,22 +173,10 @@ function activateTool(tool) {
   currentTool = tool;
   floatImg.elt.className = '';
 
-  if (tool == 'brush') 
-    floatImg.addClass('fa fa-paint-brush');
-
-  else if (tool == 'eraser') 
-    floatImg.addClass('fa fa-eraser');
-  
-  else if (tool == 'square') 
-    floatImg.addClass('fa fa-square-o');
-
-  else if (tool == 'circle') 
-    floatImg.addClass('fa fa-circle-o');
-
-  else if (tool == 'arrow') 
-    floatImg.addClass('fa fa-arrow-right');
-
-  else if (tool == 'array') 
-    floatImg.addClass('fa fa-square-o');
-
+  if (tool == 'brush') floatImg.addClass('fa fa-paint-brush');
+  else if (tool == 'eraser') floatImg.addClass('fa fa-eraser');
+  else if (tool == 'square') floatImg.addClass('fa fa-square-o');
+  else if (tool == 'circle') floatImg.addClass('fa fa-circle-o');
+  else if (tool == 'arrow') floatImg.addClass('fa fa-arrow-right');
+  else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
