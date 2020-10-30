@@ -6,7 +6,7 @@ let squares = [];
 let circles = [];
 let arrows = [];
 let texts = [];
-let arrays = [];
+let arrayModules = [];
 
 let isDrawing = false;
 let currentTool = 'brush';
@@ -96,6 +96,10 @@ function draw() {
     circles[i].update();
     circles[i].show();
   }
+  for (let i = 0; i < arrayModules.length; i++) {
+    arrayModules[i].update();
+    arrayModules[i].show();
+  }
   for (let i = 0; i < arrows.length; i++) {
     arrows[i].update();
     arrows[i].show();
@@ -128,10 +132,10 @@ function draw() {
   if (currentArray) {
     if (currentTool == "array") {
 
-      if (Math.abs(lockedPt.x - currentSquare.lx) < 100) {
-        currentSquare.lx = mouseX;
-        currentSquare.update();
-        currentSquare.show();
+      if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
+        currentArray.lx = mouseX;
+        currentArray.update();
+        currentArray.show();
       }
       else{
         endPath();
@@ -161,7 +165,7 @@ function startPath() {
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
-  currentArray = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -183,7 +187,7 @@ function endPath() {
 
   if (currentTool == "array") {
     if (currentArray) {
-      squares.push(currentSquare);
+      arrayModules.push(currentArray);
     }
   }
 
@@ -197,6 +201,7 @@ function endPath() {
 
 function clearDrawing() {
   drawing = [];
+  
 }
 
 function undo() {

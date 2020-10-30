@@ -16,7 +16,7 @@ class Square {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.lx, this.by+50);
+    rect(this.bx, this.by, this.lx, this.ly);
   }
 }
 
@@ -34,6 +34,27 @@ class Circle {
   show() {
     strokeWeight(this.stroke);
     circle(this.bx, this.by, this.diameter);
+  }
+}
+
+class ArrayModule {
+  constructor(x, y, color, stroke) {
+    this.bx = x;
+    this.by = y;
+    this.lx = x;
+    this.ly =y;
+    this.color = color;
+    this.stroke = stroke;
+  }
+
+  update() {
+    stroke(this.color);
+    noFill();
+  }
+  
+  show() {
+    strokeWeight(this.stroke);
+    rect(this.bx, this.by, this.lx, this.by+50);
   }
 }
 
