@@ -49,7 +49,7 @@ class Arrow {
   
   update() {
     stroke(this.color);
-    noFill();
+    fill(this.color);
   }
   
   show() {
