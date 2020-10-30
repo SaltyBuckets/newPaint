@@ -53,15 +53,15 @@ class Arrow {
   }
   
   show() {
-    var offset = 16;
+    let offset = 20;
     strokeWeight(this.stroke);
     line(this.bx, this.by, this.lx, this.ly);
-     push(); //start new drawing state
-     var angle = atan2(this.by - this.ly, this.bx - this.lx); //gets the angle of the line
-     translate(this.bx, this.ly); //translates to the destination vertex
-     rotate(angle - HALF_PI); //rotates the arrow point
-     triangle(-offset * 0.5, offset, offset * 0.5, offset, 0, -offset / 2); //draws the arrow point as a triangle
-     pop();
+     push() //start new drawing state
+    var angle = atan2(this.by - this.ly, this.bx - this.lx); //gets the angle of the line
+    translate(this.lx, this.ly); //translates to the destination vertex
+    rotate(angle-HALF_PI); //rotates the arrow point
+    triangle(-offset*0.5, offset, offset*0.5, offset, 0, -offset/2); //draws the arrow point as a triangle
+    pop();
   }
 }
 
