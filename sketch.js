@@ -86,7 +86,6 @@ function draw() {
     }
   }
 
-  noFill();
 
   
   for (let i = 0; i < squares.length; i++) {
@@ -129,11 +128,8 @@ function draw() {
   if (currentArray) {
     if (currentTool == "array") {
 
-      console.log(Math.abs(lockedPt.x - currentSquare.lx));
-
       if (Math.abs(lockedPt.x - currentSquare.lx) < 100) {
         currentSquare.lx = mouseX;
-        // currentSquare.ly = lockedPt.y - 100;
         currentSquare.update();
         currentSquare.show();
       }
@@ -143,7 +139,8 @@ function draw() {
       }
     }
   }
-  for (let i = 0; i < drawing.length; i++) {
+    noFill();
+    for (let i = 0; i < drawing.length; i++) {
     let path = drawing[i];
     beginShape();
   
