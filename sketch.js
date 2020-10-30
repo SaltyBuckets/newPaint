@@ -12,6 +12,9 @@ let isDrawing = false;
 let currentTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
 
+let temp = [];
+let condition = true;
+
 let backgroundColor = 150;
 let brushColor = '#ed225d';
 
@@ -134,11 +137,13 @@ function draw() {
 
       if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
         currentArray.lx = mouseX;
+        condition = true;
         currentArray.update();
         currentArray.show();
       }
       else{
         endPath();
+        condition = false;
         startPath();
       }
     }
@@ -162,10 +167,13 @@ function startPath() {
   isDrawing = true;
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
+
+  temp.push(lockedPt.y);
+
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
-  currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize, temp[0], condition);
   currentPath = [];
   drawing.push(currentPath);
 }

@@ -4,7 +4,7 @@ class Square {
     this.bx = x;
     this.by = y;
     this.lx = x;
-    this.ly = lockedPt.x + 100;
+    this.ly = y;
     this.color = color;
     this.stroke = stroke;
   }
@@ -38,14 +38,17 @@ class Circle {
 }
 
 class ArrayModule {
-  constructor(x, y, color, stroke) {
+  constructor(x, y, color, stroke, initialy, tempcond) {
     this.bx = x;
     this.by = y;
     this.lx = x;
-    this.ly =y;
     this.color = color;
     this.stroke = stroke;
+    this.iy = initialy;
+    this.tc = tempcond;
   }
+
+
 
   update() {
     stroke(this.color);
@@ -54,7 +57,12 @@ class ArrayModule {
   
   show() {
     strokeWeight(this.stroke);
+    if(this.tc){
     rect(this.bx, this.by, this.lx, this.by+50);
+    }
+    else{
+      rect(this.bx, this.iy, this.lx, this.iy+50);
+    }
   }
 }
 
