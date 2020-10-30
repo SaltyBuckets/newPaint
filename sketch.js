@@ -88,18 +88,7 @@ function draw() {
 
   noFill();
 
-  for (let i = 0; i < drawing.length; i++) {
-    let path = drawing[i];
-    beginShape();
-
-    for (let j = 0; j < path.length; j++) {
-      vertex(path[j].x, path[j].y);
-      stroke(path[j].color);
-      strokeWeight(path[j].size);
-    }
-    endShape();
-  }
-
+  
   for (let i = 0; i < squares.length; i++) {
     squares[i].update();
     squares[i].show();
@@ -154,7 +143,18 @@ function draw() {
       }
     }
   }
-
+  for (let i = 0; i < drawing.length; i++) {
+    let path = drawing[i];
+    beginShape();
+  
+    for (let j = 0; j < path.length; j++) {
+      vertex(path[j].x, path[j].y);
+      stroke(path[j].color);
+      strokeWeight(path[j].size);
+    }
+    endShape();
+  }
+  
 }
 
 function startPath() {
