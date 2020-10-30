@@ -32,7 +32,7 @@ function setup() {
   canvas.mouseReleased(endPath);
   canvas.mouseOut(endPath);
 
-  // colorPicker = select('#favcolor');
+  colorPicker = select('#favcolor');
 
   rectMode(RADIUS);
 
@@ -43,14 +43,14 @@ function setup() {
   slider.parent('brushSizeDropdown');
   slider.position(0, 0, 'relative');
 
-  // floatImg = select('#floatImg');
+  floatImg = select('#floatImg');
 
   rectMode(CORNERS);
 }
 
 function draw() {
   background(backgroundColor);
-  // brushColor = colorPicker.value();
+  brushColor = colorPicker.value();
   brushSize = slider.value();
   strokeWeight(brushSize);
 
@@ -144,7 +144,7 @@ function draw() {
 
       if (Math.abs(lockedPt.x - currentSquare.lx) < 100) {
         currentSquare.lx = mouseX;
-        currentSquare.ly = mouseY;
+        // currentSquare.ly = lockedPt.y - 100;
         currentSquare.update();
         currentSquare.show();
       }

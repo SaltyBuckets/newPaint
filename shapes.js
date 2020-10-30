@@ -2,9 +2,9 @@
 class Square {
   constructor(x, y, color, stroke) {
     this.bx = x;
-    this.by = 100;
+    this.by = y;
     this.lx = x;
-    this.ly = 100;
+    this.ly = lockedPt.x + 100;
     this.color = color;
     this.stroke = stroke;
   }
@@ -16,7 +16,7 @@ class Square {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.lx, this.ly);
+    rect(this.bx, this.by, this.lx, this.by+50);
   }
 }
 
