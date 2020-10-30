@@ -21,10 +21,10 @@ class Square {
 }
 
 class Circle {
-  constructor(x, y, diameter, color, stroke) {
+  constructor(x, y, color, stroke) {
     this.bx = x;
     this.by = y;
-    this.diameter = diameter;
+    this.diameter = 0;
     this.color = color;
     this.stroke = stroke;
   }

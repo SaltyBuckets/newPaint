@@ -10,6 +10,7 @@ let arrayModules = [];
 
 let isDrawing = false;
 let currentTool = 'brush';
+let lastTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
 
 let backgroundColor = 150;
@@ -78,16 +79,13 @@ function draw() {
     } else if (currentTool == 'circle') {
       console.log('circle');
       currentCircle.diameter = dist(lockedPt.x, lockedPt.y, mouseX, mouseY);
-    }
-    else if (currentTool == "arrow") {
-      console.log("arrow");
-    } else if (currentTool == "array") {
-      console.log("array");
+    } else if (currentTool == 'arrow') {
+      console.log('arrow');
+    } else if (currentTool == 'array') {
+      console.log('array');
     }
   }
 
-
-  
   for (let i = 0; i < squares.length; i++) {
     squares[i].update();
     squares[i].show();
@@ -105,7 +103,7 @@ function draw() {
     arrows[i].show();
   }
   if (currentSquare) {
-    if (currentTool == "square") {
+    if (currentTool == 'square') {
       currentSquare.lx = mouseX;
       currentSquare.ly = mouseY;
       currentSquare.update();
@@ -121,7 +119,7 @@ function draw() {
   }
 
   if (currentArrow) {
-    if (currentTool == "arrow") {
+    if (currentTool == 'arrow') {
       currentArrow.lx = mouseX;
       currentArrow.ly = mouseY;
       currentArrow.update();
@@ -130,32 +128,29 @@ function draw() {
   }
 
   if (currentArray) {
-    if (currentTool == "array") {
-
+    if (currentTool == 'array') {
       if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
         currentArray.lx = mouseX;
         currentArray.update();
         currentArray.show();
-      }
-      else{
+      } else {
         endPath();
         startPath();
       }
     }
   }
-    noFill();
-    for (let i = 0; i < drawing.length; i++) {
+  noFill();
+  for (let i = 0; i < drawing.length; i++) {
     let path = drawing[i];
     beginShape();
-  
+
     for (let j = 0; j < path.length; j++) {
-      vertex(path[j].x, path[j].y);
+      curveVertex(path[j].x, path[j].y);
       stroke(path[j].color);
       strokeWeight(path[j].size);
     }
     endShape();
   }
-  
 }
 
 function startPath() {
@@ -163,7 +158,7 @@ function startPath() {
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
-  currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
+  currentCircle = new Circle(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentPath = [];
@@ -172,51 +167,62 @@ function startPath() {
 
 function endPath() {
   isDrawing = false;
-  if (currentTool == "arrow") {
+  if (currentTool == 'arrow') {
     if (currentArrow) {
       arrows.push(currentArrow);
     }
   }
 
-
-  if (currentTool == "square") {
+  if (currentTool == 'square') {
     if (currentSquare) {
       squares.push(currentSquare);
     }
   }
 
-  if (currentTool == "array") {
+  if (currentTool == 'array') {
     if (currentArray) {
       arrayModules.push(currentArray);
     }
   }
 
   if (currentCircle)
-    if (currentCircle.diameter > 3) circles.push(currentCircle);
-
+    if (currentCircle.diameter > 3) {
+      circles.push(currentCircle);
+    }
+  lastTool = currentTool;
   currentSquare = null;
   currentArray = null;
   currentArrow = null;
 }
 
 function clearDrawing() {
- drawing = [];
- currentPath = [];
- saved = [];
- squares = [];
- circles = [];
- arrows = [];
- texts = [];
- arrayModules = [];
+  drawing = [];
+  currentPath = [];
+  saved = [];
+  squares = [];
+  circles = [];
+  arrows = [];
+  texts = [];
+  arrayModules = [];
 }
 
 function undo() {
-  let savedPath = drawing.pop();
-  if (savedPath !== undefined) saved.push(savedPath);
+  let temp;
+  if (lastTool == 'brush') temp = drawing.pop();
+  else if (lastTool == 'eraser') temp = drawing.pop();
+  else if (lastTool == 'square') temp = squares.pop();
+  else if (lastTool == 'circle') temp = circles.pop();
+  else if (lastTool == 'arrow') temp = arrows.pop();
+  else if (lastTool == 'array') temp = arrayModules.pop();
+  if (temp !== undefined) saved.push(temp);
 }
 function redo() {
-  let savedPath = saved.pop();
-  if (savedPath !== undefined) drawing.push(savedPath);
+  let temp = saved.pop();
+
+  if (temp !== undefined) drawing.push(temp);
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function activateTool(tool) {
@@ -233,3 +239,4 @@ function activateTool(tool) {
 function saveImage() {
   saveCanvas('Drawing', 'jpg');
 }
+
