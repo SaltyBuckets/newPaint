@@ -200,8 +200,14 @@ function endPath() {
 }
 
 function clearDrawing() {
-  drawing = [];
-  
+ drawing = [];
+ currentPath = [];
+ saved = [];
+ squares = [];
+ circles = [];
+ arrows = [];
+ texts = [];
+ arrayModules = [];
 }
 
 function undo() {
@@ -223,4 +229,7 @@ function activateTool(tool) {
   else if (tool == 'circle') floatImg.addClass('fa fa-circle-o');
   else if (tool == 'arrow') floatImg.addClass('fa fa-arrow-right');
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
+}
+function saveImage() {
+  saveCanvas('Drawing', 'jpg');
 }

@@ -29,7 +29,8 @@ class Circle {
     this.stroke = stroke;
   }
 
-  update() {}
+  update() {  stroke(this.color);
+  noFill();}
 
   show() {
     strokeWeight(this.stroke);
