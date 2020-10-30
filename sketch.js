@@ -6,6 +6,7 @@ let squares = [];
 let circles = [];
 let arrows = [];
 let texts = [];
+let arrays = [];
 
 let isDrawing = false;
 let currentTool = 'brush';
@@ -20,6 +21,7 @@ let floatImg;
 let currentSquare;
 let currentCircle;
 let currentArrow;
+let currentArray;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -30,7 +32,7 @@ function setup() {
   canvas.mouseReleased(endPath);
   canvas.mouseOut(endPath);
 
-  colorPicker = select('#favcolor');
+  // colorPicker = select('#favcolor');
 
   rectMode(RADIUS);
 
@@ -41,14 +43,14 @@ function setup() {
   slider.parent('brushSizeDropdown');
   slider.position(0, 0, 'relative');
 
-  floatImg = select('#floatImg');
+  // floatImg = select('#floatImg');
 
   rectMode(CORNERS);
 }
 
 function draw() {
   background(backgroundColor);
-  brushColor = colorPicker.value();
+  // brushColor = colorPicker.value();
   brushSize = slider.value();
   strokeWeight(brushSize);
 
@@ -79,6 +81,8 @@ function draw() {
     }
     else if (currentTool == "arrow") {
       console.log("arrow");
+    } else if (currentTool == "array") {
+      console.log("array");
     }
   }
 
@@ -133,6 +137,24 @@ function draw() {
     }
   }
 
+  if (currentArray) {
+    if (currentTool == "array") {
+
+      console.log(Math.abs(lockedPt.x - currentSquare.lx));
+
+      if (Math.abs(lockedPt.x - currentSquare.lx) < 100) {
+        currentSquare.lx = mouseX;
+        currentSquare.ly = mouseY;
+        currentSquare.update();
+        currentSquare.show();
+      }
+      else{
+        endPath();
+        startPath();
+      }
+    }
+  }
+
 }
 
 function startPath() {
@@ -141,7 +163,8 @@ function startPath() {
   lockedPt.y = mouseY;
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, 0, brushColor, brushSize);
-  currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize)
+  currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  currentArray = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -161,10 +184,17 @@ function endPath() {
     }
   }
 
+  if (currentTool == "array") {
+    if (currentArray) {
+      squares.push(currentSquare);
+    }
+  }
+
   if (currentCircle)
     if (currentCircle.diameter > 3) circles.push(currentCircle);
 
   currentSquare = null;
+  currentArray = null;
   currentArrow = null;
 }
 

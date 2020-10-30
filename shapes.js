@@ -2,9 +2,9 @@
 class Square {
   constructor(x, y, color, stroke) {
     this.bx = x;
-    this.by = y;
+    this.by = 100;
     this.lx = x;
-    this.ly = y;
+    this.ly = 100;
     this.color = color;
     this.stroke = stroke;
   }
@@ -57,4 +57,5 @@ class Arrow {
     line(this.bx, this.by, this.lx, this.ly);
   }
 }
+
 
