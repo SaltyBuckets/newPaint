@@ -47,6 +47,8 @@ function setup() {
   floatImg = select('#floatImg');
 
   rectMode(CORNERS);
+  windowResized();
+
 }
 
 function draw() {
