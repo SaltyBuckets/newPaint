@@ -16,7 +16,7 @@ class Square {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.lx, this.ly);
+    rect(this.bx, this.by, this.lx, this.ly,2);
   }
 }
 
@@ -55,7 +55,7 @@ class ArrayModule {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.lx, this.by+50);
+    rect(this.bx, this.by, this.lx, this.by+50,2);
   }
 }
 

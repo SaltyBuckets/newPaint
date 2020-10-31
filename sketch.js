@@ -48,7 +48,6 @@ function setup() {
 
   rectMode(CORNERS);
   windowResized();
-
 }
 
 function draw() {
@@ -61,15 +60,15 @@ function draw() {
     if (currentTool == 'brush') {
       let point = {
         x: mouseX,
-        y: mouseY,
+        y: mouseY,              //get brush strokes
         color: brushColor,
         size: brushSize,
       };
-      currentPath.push(point);
+      currentPath.push(point);  
     } else if (currentTool == 'eraser') {
       console.log('eraser');
       brushColor = backgroundColor;
-      let point = {
+      let point = {           //get eraser strokes
         x: mouseX,
         y: mouseY,
         color: brushColor,
@@ -88,47 +87,33 @@ function draw() {
     }
   }
 
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].update();
-    squares[i].show();
+  showSquares();
+  showCircles();
+  showArrows();
+  showArrays();
+
+  noFill();
+  for (let i = 0; i < drawing.length; i++) {
+    let path = drawing[i];
+    beginShape();
+
+    for (let j = 0; j < path.length; j++) {      //draw brush strokes
+      curveVertex(path[j].x, path[j].y);
+      stroke(path[j].color);
+      strokeWeight(path[j].size);
+    }
+    endShape();
   }
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].update();
-    circles[i].show();
-  }
+  strokeWeight(2);
+  stroke("#ccc")        //draw brush size indicator
+  circle(mouseX,mouseY,brushSize)
+}
+
+function showArrays() {
   for (let i = 0; i < arrayModules.length; i++) {
     arrayModules[i].update();
     arrayModules[i].show();
   }
-  for (let i = 0; i < arrows.length; i++) {
-    arrows[i].update();
-    arrows[i].show();
-  }
-  if (currentSquare) {
-    if (currentTool == 'square') {
-      currentSquare.lx = mouseX;
-      currentSquare.ly = mouseY;
-      currentSquare.update();
-      currentSquare.show();
-    }
-  }
-
-  if (currentCircle) {
-    if (currentCircle.diameter > 3) {
-      currentCircle.update();
-      currentCircle.show();
-    }
-  }
-
-  if (currentArrow) {
-    if (currentTool == 'arrow') {
-      currentArrow.lx = mouseX;
-      currentArrow.ly = mouseY;
-      currentArrow.update();
-      currentArrow.show();
-    }
-  }
-
   if (currentArray) {
     if (currentTool == 'array') {
       if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
@@ -141,17 +126,49 @@ function draw() {
       }
     }
   }
-  noFill();
-  for (let i = 0; i < drawing.length; i++) {
-    let path = drawing[i];
-    beginShape();
+}
 
-    for (let j = 0; j < path.length; j++) {
-      curveVertex(path[j].x, path[j].y);
-      stroke(path[j].color);
-      strokeWeight(path[j].size);
+function showArrows() {
+  for (let i = 0; i < arrows.length; i++) {
+    arrows[i].update();
+    arrows[i].show();
+  }
+  if (currentArrow) {
+    if (currentTool == 'arrow') {
+      currentArrow.lx = mouseX;
+      currentArrow.ly = mouseY;
+      currentArrow.update();
+      currentArrow.show();
     }
-    endShape();
+  }
+}
+
+function showCircles() {
+  for (let i = 0; i < circles.length; i++) {
+    circles[i].update();
+    circles[i].show();
+  }
+
+  if (currentCircle) {
+    if (currentCircle.diameter > 3) {
+      currentCircle.update();
+      currentCircle.show();
+    }
+  }
+}
+
+function showSquares() {
+  for (let i = 0; i < squares.length; i++) {
+    squares[i].update();
+    squares[i].show();
+  }
+  if (currentSquare) {
+    if (currentTool == 'square') {
+      currentSquare.lx = mouseX;
+      currentSquare.ly = mouseY;
+      currentSquare.update();
+      currentSquare.show();
+    }
   }
 }
 
@@ -226,7 +243,6 @@ function redo() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-
 function activateTool(tool) {
   currentTool = tool;
   floatImg.elt.className = '';
@@ -241,4 +257,3 @@ function activateTool(tool) {
 function saveImage() {
   saveCanvas('Drawing', 'jpg');
 }
-
