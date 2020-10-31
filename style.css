@@ -1,7 +1,9 @@
 html,
 body {
   height: 100%;
+  margin: 0;
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
 
 .main-div {
@@ -104,4 +106,7 @@ li .dropdown {
   border-style: solid;
   height: 90%;
   width: 100%;
+}
+#favcolor{
+padding: 0;
 }

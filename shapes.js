@@ -16,20 +16,21 @@ class Square {
   
   show() {
     strokeWeight(this.stroke);
-    rect(this.bx, this.by, this.lx, this.ly);
+    rect(this.bx, this.by, this.lx, this.ly,2);
   }
 }
 
 class Circle {
-  constructor(x, y, diameter, color, stroke) {
+  constructor(x, y, color, stroke) {
     this.bx = x;
     this.by = y;
-    this.diameter = diameter;
+    this.diameter = 0;
     this.color = color;
     this.stroke = stroke;
   }
 
-  update() {}
+  update() {  stroke(this.color);
+  noFill();}
 
   show() {
     strokeWeight(this.stroke);
@@ -58,10 +59,10 @@ class ArrayModule {
   show() {
     strokeWeight(this.stroke);
     if(this.tc){
-    rect(this.bx, this.by, this.lx, this.by+50);
+    rect(this.bx, this.by, this.lx, this.by+50,2);
     }
     else{
-      rect(this.bx, this.iy, this.lx, this.iy+50);
+      rect(this.bx, this.iy, this.lx, this.iy+50,2);
     }
   }
 }
