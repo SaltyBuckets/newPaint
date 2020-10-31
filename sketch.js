@@ -271,5 +271,5 @@ function mouseReleased()
 {
   temp = [];
   condition = true;
-  console.log("mouse released");
+  // console.log("mouse released");
 }
