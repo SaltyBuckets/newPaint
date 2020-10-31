@@ -32,7 +32,7 @@ function setup() {
   background(0);
 
   canvas.mousePressed(startPath);
-  canvas.mouseReleased(endPath);
+  canvas.mouseReleased(endPath)
   canvas.mouseOut(endPath);
 
   colorPicker = select('#favcolor');
@@ -88,8 +88,6 @@ function draw() {
       console.log("array");
     }
   }
-
-
   
   for (let i = 0; i < squares.length; i++) {
     squares[i].update();
@@ -209,7 +207,6 @@ function endPath() {
 
 function clearDrawing() {
   drawing = [];
-  
 }
 
 function undo() {
