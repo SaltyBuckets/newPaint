@@ -264,8 +264,10 @@ function activateTool(tool) {
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
 function saveImage() {
-  let name = prompt("Please enter your name", "");
+  let name = prompt("Please enter file name", "");
+  if(name != null){
   saveCanvas(name , 'jpg');
+  }
 }
 
 
