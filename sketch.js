@@ -88,6 +88,7 @@ function draw() {
     } else if (currentTool == 'array') {
       console.log('array');
     }
+    
   }
 
   showSquares();
@@ -263,7 +264,8 @@ function activateTool(tool) {
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
 function saveImage() {
-  saveCanvas('Drawing', 'jpg');
+  let name = prompt("Please enter your name", "");
+  saveCanvas(name , 'jpg');
 }
 
 
