@@ -7,11 +7,15 @@ let circles = [];
 let arrows = [];
 let texts = [];
 let arrayModules = [];
+let lines = [];
 
 let isDrawing = false;
 let currentTool = 'brush';
 let lastTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
+
+let temp = [];
+let condition = true;
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
@@ -25,7 +29,7 @@ let currentCircle;
 let currentArrow;
 let currentArray;
 let currentText;
-
+let currentLine;
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -33,7 +37,7 @@ function setup() {
   background(0);
 
   canvas.mousePressed(startPath);
-  canvas.mouseReleased(endPath);
+  canvas.mouseReleased(endPath)
   canvas.mouseOut(endPath);
 
   colorPicker = select('#favcolor');
@@ -89,13 +93,17 @@ function draw() {
       console.log('arrow');
     } else if (currentTool == 'array') {
       console.log('array');
+    } else if(currentTool == "line"){
+      console.log("line");
     }
+    
   }
 
   showSquares();
   showCircles();
   showArrows();
   showArrays();
+  showLines();
 
   noFill();
   for (let i = 0; i < drawing.length; i++) {
@@ -125,10 +133,12 @@ function showArrays() {
     if (currentTool == 'array') {
       if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
         currentArray.lx = mouseX;
+        condition = true;
         currentArray.update();
         currentArray.show();
       } else {
         endPath();
+        condition = false;
         startPath();
       }
     }
@@ -192,16 +202,36 @@ function showTexts() {
 }
 
 
+function showLines(){
+  for (let i = 0; i < lines.length; i++) {
+    lines[i].update();
+    lines[i].show();
+  }
+  if (currentLine) {
+    if (currentTool == 'line') {
+      currentLine.lx = mouseX;
+      currentLine.ly = mouseY;
+      currentLine.update();
+      currentLine.show();
+    }
+  }
+}
+
 function startPath() {
   isDrawing = true;
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
+
+  temp.push(lockedPt.y);
+
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentText = new Paragraph(lockedPt.x, lockedPt.y, brushColor, brushSize);
   console.log("currentyui");
+  currentLine = new Line(lockedPt.x, lockedPt.y, brushColor, brushSize);
+
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -226,6 +256,12 @@ function endPath() {
     }
   }
 
+  if (currentTool == 'line') {
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+  }
+
   if (currentCircle)
     if (currentCircle.diameter > 3) {
       circles.push(currentCircle);
@@ -240,6 +276,7 @@ function endPath() {
   currentSquare = null;
   currentArray = null;
   currentArrow = null;
+  currentLine = null;
 }
 
 function clearDrawing() {
@@ -251,6 +288,7 @@ function clearDrawing() {
   arrows = [];
   texts = [];
   arrayModules = [];
+  lines = [];
 }
 
 function keyTyped() {
@@ -265,6 +303,7 @@ function undo() {
   else if (lastTool == 'circle') temp = circles.pop();
   else if (lastTool == 'arrow') temp = arrows.pop();
   else if (lastTool == 'array') temp = arrayModules.pop();
+  else if (lastTool == 'line') temp = lines.pop();
   if (temp !== undefined) saved.push(temp);
 }
 function redo() {
@@ -287,5 +326,16 @@ function activateTool(tool) {
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
 function saveImage() {
-  saveCanvas('Drawing', 'jpg');
+  let name = prompt("Please enter file name", "");
+  if(name != null){
+  saveCanvas(name , 'jpg');
+  }
+}
+
+
+function mouseReleased()
+{
+  temp = [];
+  condition = true;
+  // console.log("mouse released");
 }
