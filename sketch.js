@@ -15,6 +15,7 @@ let lockedPt = new p5.Vector(-1, 0);
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
+let brushSize;
 
 let colorPicker;
 let floatImg;
@@ -23,6 +24,8 @@ let currentSquare;
 let currentCircle;
 let currentArrow;
 let currentArray;
+let currentText;
+
 
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
@@ -48,6 +51,7 @@ function setup() {
 
   rectMode(CORNERS);
   windowResized();
+  
 }
 
 function draw() {
@@ -60,15 +64,16 @@ function draw() {
     if (currentTool == 'brush') {
       let point = {
         x: mouseX,
-        y: mouseY,              //get brush strokes
+        y: mouseY, //get brush strokes
         color: brushColor,
         size: brushSize,
       };
-      currentPath.push(point);  
+      currentPath.push(point);
     } else if (currentTool == 'eraser') {
       console.log('eraser');
       brushColor = backgroundColor;
-      let point = {           //get eraser strokes
+      let point = {
+        //get eraser strokes
         x: mouseX,
         y: mouseY,
         color: brushColor,
@@ -97,7 +102,8 @@ function draw() {
     let path = drawing[i];
     beginShape();
 
-    for (let j = 0; j < path.length; j++) {      //draw brush strokes
+    for (let j = 0; j < path.length; j++) {
+      //draw brush strokes
       curveVertex(path[j].x, path[j].y);
       stroke(path[j].color);
       strokeWeight(path[j].size);
@@ -105,8 +111,9 @@ function draw() {
     endShape();
   }
   strokeWeight(2);
-  stroke("#ccc")        //draw brush size indicator
-  circle(mouseX,mouseY,brushSize)
+  stroke('#ccc'); //draw brush size indicator
+  circle(mouseX, mouseY, brushSize);
+
 }
 
 function showArrays() {
@@ -171,6 +178,19 @@ function showSquares() {
     }
   }
 }
+function showTexts() {
+  for (let i = 0; i < texts.length; i++) {
+    texts[i].update();
+    texts[i].show();
+  }
+  if (currentText) {
+    if (currentTool == 'text') {
+      currentText.update();
+      currentText.show();
+    }
+  }
+}
+
 
 function startPath() {
   isDrawing = true;
@@ -180,6 +200,8 @@ function startPath() {
   currentCircle = new Circle(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  currentText = new Paragraph(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  console.log("currentyui");
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -208,6 +230,12 @@ function endPath() {
     if (currentCircle.diameter > 3) {
       circles.push(currentCircle);
     }
+  
+   if (currentTool == 'text') {
+     if (currentText) {
+       texts.push(currentText);
+     }
+   }
   lastTool = currentTool;
   currentSquare = null;
   currentArray = null;
@@ -225,6 +253,10 @@ function clearDrawing() {
   arrayModules = [];
 }
 
+function keyTyped() {
+  currentText.text += key;
+  return false; 
+}
 function undo() {
   let temp;
   if (lastTool == 'brush') temp = drawing.pop();

@@ -87,4 +87,26 @@ class Arrow {
   }
 }
 
+class Paragraph {
+  constructor(x, y, color, stroke) {
+    this.bx = x;
+    this.by = y;
+    this.color = color;
+    this.stroke = stroke;
+    this.text = '';
+  }
+
+  update() {
+    noStroke();
+    fill(this.color);
+    
+  }
+
+  show() {
+    text(this.text,this.bx,this.by)
+  }
+}
+
+
+
 
