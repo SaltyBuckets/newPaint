@@ -96,3 +96,25 @@ class Arrow {
 }
 
 
+class Line {
+  constructor(x, y, color,stroke) {
+    this.bx = x;
+    this.by = y;
+    this.lx = x;
+    this.ly = y;
+    this.color = color
+    this.stroke = stroke;
+  }
+  
+  update() {
+    stroke(this.color);
+    fill(this.color);
+  }
+  
+  show() {
+    strokeWeight(this.stroke);
+    line(this.bx, this.by, this.lx, this.ly);
+  }
+}
+
+
