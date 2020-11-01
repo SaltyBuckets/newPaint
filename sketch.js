@@ -104,7 +104,7 @@ function draw() {
   showArrows();
   showArrays();
   showLines();
-
+  showTexts();
   noFill();
   for (let i = 0; i < drawing.length; i++) {
     let path = drawing[i];
