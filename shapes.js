@@ -115,7 +115,7 @@ class Paragraph {
       stroke(this.color);
       strokeWeight(1);
       drawingContext.setLineDash([6]);
-      rect(this.bx - 5, this.by - 30, this.bx + 15*(this.text.length) + 20, this.by + 20);
+      rect(this.bx - 5, this.by - 30, this.bx + 20*(this.text.length) + 20, this.by + 20);
       fill(this.color);
       noStroke();
       drawingContext.setLineDash([]);
