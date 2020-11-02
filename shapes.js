@@ -49,8 +49,6 @@ class ArrayModule {
     this.tc = tempcond;
   }
 
-
-
   update() {
     stroke(this.color);
     noFill();
@@ -112,12 +110,14 @@ class Paragraph {
 
   show(caret) {
     if (!caret) caret = ''; 
-    text(this.text + caret ,this.bx,this.by)
+    {
+      drawingContext.setLineDash([6]);
+      drawingContext.rect(this.bx - 5, this.by - 20, this.bx + 20*(this.text.length) + 20, this.by + 20);
+      text(this.text + caret ,this.bx,this.by)
+    }
+    
   }
 }
-
-
-
 
 class Line {
   constructor(x, y, color,stroke) {
@@ -139,5 +139,3 @@ class Line {
     line(this.bx, this.by, this.lx, this.ly);
   }
 }
-
-
