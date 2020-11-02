@@ -56,7 +56,7 @@ function setup() {
 
   rectMode(CORNERS);
   windowResized();
-  
+
 }
 
 function draw() {
@@ -94,10 +94,10 @@ function draw() {
       console.log('arrow');
     } else if (currentTool == 'array') {
       console.log('array');
-    } else if(currentTool == "line"){
+    } else if (currentTool == "line") {
       console.log("line");
     }
-    
+
   }
 
   showSquares();
@@ -204,7 +204,7 @@ function showTexts() {
 }
 
 
-function showLines(){
+function showLines() {
   for (let i = 0; i < lines.length; i++) {
     lines[i].update();
     lines[i].show();
@@ -266,12 +266,12 @@ function endPath() {
     if (currentCircle.diameter > 3) {
       circles.push(currentCircle);
     }
-  
-   if (currentTool == 'text') {
-     if (currentText) {
-       texts.push(currentText);
-     }
-   }
+
+  if (currentTool == 'text') {
+    if (currentText) {
+      texts.push(currentText);
+    }
+  }
   lastTool = currentTool;
   currentSquare = null;
   currentArray = null;
@@ -292,14 +292,14 @@ function clearDrawing() {
 }
 
 function keyPressed() {
-  
+
   if (keyCode == 8) {
     currentText.text = currentText.text.slice(0, -1);
   }
-  else if (keyCode == 13) {currentText.text += '\n'}
-  else if (key.length==1) { currentText.text += key; }
-  
-  return false; 
+  else if (keyCode == 13) { currentText.text += '\n' }
+  else if (key.length == 1) { currentText.text += key; }
+
+  return false;
 }
 function undo() {
   let temp;
@@ -333,12 +333,11 @@ function activateTool(tool) {
 }
 function saveImage() {
   let name = prompt("Please enter file name", "");
-  if(name != null){
-  saveCanvas(name , 'jpg');
+  if (name != null) {
+    saveCanvas(name, 'jpg');
   }
 }
-function mouseReleased()
-{
+function mouseReleased() {
   temp = [];
   condition = true;
   // console.log("mouse released");

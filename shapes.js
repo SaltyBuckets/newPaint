@@ -109,14 +109,12 @@ class Paragraph {
   }
 
   show(caret) {
-    if (!caret) caret = ''; 
-    {
+    if (!caret) caret = ''
+    
+    text(this.text + caret ,this.bx,this.by)
       drawingContext.setLineDash([6]);
       drawingContext.rect(this.bx - 5, this.by - 20, this.bx + 20*(this.text.length) + 20, this.by + 20);
-      text(this.text + caret ,this.bx,this.by)
-    }
-    
-  }
+      }
 }
 
 class Line {
