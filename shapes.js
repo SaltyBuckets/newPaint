@@ -96,22 +96,23 @@ class Arrow {
 }
 
 class Paragraph {
-  constructor(x, y, color, stroke) {
+  constructor(x, y, color, size) {
     this.bx = x;
     this.by = y;
     this.color = color;
-    this.stroke = stroke;
+    this.size = size+20;
     this.text = '';
   }
 
   update() {
     noStroke();
     fill(this.color);
-    
+    textSize(this.size)
   }
 
-  show() {
-    text(this.text,this.bx,this.by)
+  show(caret) {
+    if (!caret) caret = ''; 
+    text(this.text + caret ,this.bx,this.by)
   }
 }
 

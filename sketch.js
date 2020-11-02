@@ -16,6 +16,7 @@ let lockedPt = new p5.Vector(-1, 0);
 
 let temp = [];
 let condition = true;
+let typing = false;
 
 let backgroundColor = 150;
 let brushColor = '#ed225d';
@@ -196,7 +197,8 @@ function showTexts() {
   if (currentText) {
     if (currentTool == 'text') {
       currentText.update();
-      currentText.show();
+      currentText.show('|');
+
     }
   }
 }
@@ -229,9 +231,7 @@ function startPath() {
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentText = new Paragraph(lockedPt.x, lockedPt.y, brushColor, brushSize);
-  console.log("currentyui");
   currentLine = new Line(lockedPt.x, lockedPt.y, brushColor, brushSize);
-
   currentPath = [];
   drawing.push(currentPath);
 }
@@ -291,8 +291,14 @@ function clearDrawing() {
   lines = [];
 }
 
-function keyTyped() {
-  currentText.text += key;
+function keyPressed() {
+  
+  if (keyCode == 8) {
+    currentText.text = currentText.text.slice(0, -1);
+  }
+  else if (keyCode == 13) {currentText.text += '\n'}
+  else if (key.length==1) { currentText.text += key; }
+  
   return false; 
 }
 function undo() {
@@ -331,8 +337,6 @@ function saveImage() {
   saveCanvas(name , 'jpg');
   }
 }
-
-
 function mouseReleased()
 {
   temp = [];
