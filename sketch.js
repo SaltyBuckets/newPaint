@@ -1,13 +1,5 @@
 // @ts-nocheck
 let drawing = [];
-let currentPath = [];
-let saved = [];
-let squares = [];
-let circles = [];
-let arrows = [];
-let texts = [];
-let arrayModules = [];
-let lines = [];
 
 let isDrawing = false;
 let currentTool = 'brush';
@@ -25,6 +17,7 @@ let brushSize;
 let colorPicker;
 let floatImg;
 
+let currentPath = [];
 let currentSquare;
 let currentCircle;
 let currentArrow;
@@ -38,7 +31,7 @@ function setup() {
   background(0);
 
   canvas.mousePressed(startPath);
-  canvas.mouseReleased(endPath)
+  canvas.mouseReleased(endPath);
   canvas.mouseOut(endPath);
 
   colorPicker = select('#favcolor');
@@ -56,7 +49,6 @@ function setup() {
 
   rectMode(CORNERS);
   windowResized();
-  
 }
 
 function draw() {
@@ -94,130 +86,122 @@ function draw() {
       console.log('arrow');
     } else if (currentTool == 'array') {
       console.log('array');
-    } else if(currentTool == "line"){
-      console.log("line");
+    } else if (currentTool == 'line') {
+      console.log('line');
     }
-    
   }
 
-  showSquares();
-  showCircles();
-  showArrows();
-  showArrays();
-  showLines();
-  showTexts();
+  showAll();
+  // showSquares();
+  // showCircles();
+  // showArrows();
+  // showArrays();
+  // showLines();
+  // showTexts();
+  // noFill();
+  // for (let i = 0; i < drawing.length; i++) {
+  //   let path = drawing[i];
+  //   beginShape();
+
+  //   for (let j = 0; j < path.length; j++) {
+  //     //draw brush strokes
+  //     curveVertex(path[j].x, path[j].y);
+  //     stroke(path[j].color);
+  //     strokeWeight(path[j].size);
+  //   }
+  //   endShape();
+  // }
   noFill();
-  for (let i = 0; i < drawing.length; i++) {
-    let path = drawing[i];
-    beginShape();
-
-    for (let j = 0; j < path.length; j++) {
-      //draw brush strokes
-      curveVertex(path[j].x, path[j].y);
-      stroke(path[j].color);
-      strokeWeight(path[j].size);
-    }
-    endShape();
-  }
   strokeWeight(2);
   stroke('#ccc'); //draw brush size indicator
   circle(mouseX, mouseY, brushSize);
-
 }
-
-function showArrays() {
-  for (let i = 0; i < arrayModules.length; i++) {
-    arrayModules[i].update();
-    arrayModules[i].show();
-  }
-  if (currentArray) {
-    if (currentTool == 'array') {
-      if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
-        currentArray.lx = mouseX;
-        condition = true;
-        currentArray.update();
-        currentArray.show();
-      } else {
-        endPath();
-        condition = false;
-        startPath();
+function showAll() {
+  for (let i = 0; i < drawing.length; i++) {
+    const item = drawing[i];
+    if (item instanceof Square) {
+      item.update();
+      item.show();
+      if (currentSquare) {
+        if (currentTool == 'square') {
+          currentSquare.lx = mouseX;
+          currentSquare.ly = mouseY;
+          currentSquare.update();
+          currentSquare.show();
+        }
       }
+    } else if (item instanceof Circle) {
+      item.update();
+      item.show();
+      if (currentCircle) {
+        if (currentCircle.diameter > 3) {
+          currentCircle.update();
+          currentCircle.show();
+        }
+      }
+    } else if (item instanceof Arrow) {
+      item.update();
+      item.show();
+      if (currentArrow) {
+        if (currentTool == 'arrow') {
+          currentArrow.lx = mouseX;
+          currentArrow.ly = mouseY;
+          currentArrow.update();
+          currentArrow.show();
+        }
+      }
+    } else if (item instanceof Line) {
+      item.update();
+      item.show();
+      if (currentLine) {
+        if (currentTool == 'line') {
+          currentLine.lx = mouseX;
+          currentLine.ly = mouseY;
+          currentLine.update();
+          currentLine.show();
+        }
+      }
+    } else if (item instanceof Paragraph) {
+        item.update();
+        item.show();
+      if (currentText) {
+        if (currentTool == 'text') {
+          currentText.update();
+          currentText.show('|');
+        }
+      }
+    }else if (item instanceof ArrayModule) {
+          item.update();
+          item.show();
+        
+        if (currentArray) {
+          if (currentTool == 'array') {
+            if (Math.abs(lockedPt.x - currentArray.lx) < 100) {
+              currentArray.lx = mouseX;
+              condition = true;
+              currentArray.update();
+              currentArray.show();
+            } else {
+              endPath();
+              condition = false;
+              startPath();
+            }
+          }
+        }
+    } else {
+         beginShape();
+         for (let j = 0; j < item.length; j++) {
+           //draw brush strokes
+          noFill();
+           curveVertex(item[j].x, item[j].y);
+           stroke(item[j].color);
+           strokeWeight(item[j].size);
+         }
+         endShape();
     }
   }
 }
 
-function showArrows() {
-  for (let i = 0; i < arrows.length; i++) {
-    arrows[i].update();
-    arrows[i].show();
-  }
-  if (currentArrow) {
-    if (currentTool == 'arrow') {
-      currentArrow.lx = mouseX;
-      currentArrow.ly = mouseY;
-      currentArrow.update();
-      currentArrow.show();
-    }
-  }
-}
-
-function showCircles() {
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].update();
-    circles[i].show();
-  }
-
-  if (currentCircle) {
-    if (currentCircle.diameter > 3) {
-      currentCircle.update();
-      currentCircle.show();
-    }
-  }
-}
-
-function showSquares() {
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].update();
-    squares[i].show();
-  }
-  if (currentSquare) {
-    if (currentTool == 'square') {
-      currentSquare.lx = mouseX;
-      currentSquare.ly = mouseY;
-      currentSquare.update();
-      currentSquare.show();
-    }
-  }
-}
-function showTexts() {
-  for (let i = 0; i < texts.length; i++) {
-    texts[i].update();
-    texts[i].show();
-  }
-  if (currentText) {
-    if (currentTool == 'text') {
-      currentText.update();
-      currentText.show('|');
-
-    }
-  }
-}
-
-
-function showLines(){
-  for (let i = 0; i < lines.length; i++) {
-    lines[i].update();
-    lines[i].show();
-  }
-  if (currentLine) {
-    if (currentTool == 'line') {
-      currentLine.lx = mouseX;
-      currentLine.ly = mouseY;
-      currentLine.update();
-      currentLine.show();
-    }
-  }
-}
 
 function startPath() {
   isDrawing = true;
@@ -240,38 +224,38 @@ function endPath() {
   isDrawing = false;
   if (currentTool == 'arrow') {
     if (currentArrow) {
-      arrows.push(currentArrow);
+      drawing.push(currentArrow);
     }
   }
 
   if (currentTool == 'square') {
     if (currentSquare) {
-      squares.push(currentSquare);
+      drawing.push(currentSquare);
     }
   }
 
   if (currentTool == 'array') {
     if (currentArray) {
-      arrayModules.push(currentArray);
+      drawing.push(currentArray);
     }
   }
 
   if (currentTool == 'line') {
     if (currentLine) {
-      lines.push(currentLine);
+      drawing.push(currentLine);
     }
   }
 
   if (currentCircle)
     if (currentCircle.diameter > 3) {
-      circles.push(currentCircle);
+      drawing.push(currentCircle);
     }
-  
-   if (currentTool == 'text') {
-     if (currentText) {
-       texts.push(currentText);
-     }
-   }
+
+  if (currentTool == 'text') {
+    if (currentText) {
+      drawing.push(currentText);
+    }
+  }
   lastTool = currentTool;
   currentSquare = null;
   currentArray = null;
@@ -292,14 +276,15 @@ function clearDrawing() {
 }
 
 function keyPressed() {
-  
   if (keyCode == 8) {
     currentText.text = currentText.text.slice(0, -1);
+  } else if (keyCode == 13) {
+    currentText.text += '\n';
+  } else if (key.length == 1) {
+    currentText.text += key;
   }
-  else if (keyCode == 13) {currentText.text += '\n'}
-  else if (key.length==1) { currentText.text += key; }
-  
-  return false; 
+
+  return false;
 }
 function undo() {
   let temp;
@@ -332,13 +317,12 @@ function activateTool(tool) {
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
 function saveImage() {
-  let name = prompt("Please enter file name", "");
-  if(name != null){
-  saveCanvas(name , 'jpg');
+  let name = prompt('Please enter file name', '');
+  if (name != null) {
+    saveCanvas(name, 'jpg');
   }
 }
-function mouseReleased()
-{
+function mouseReleased() {
   temp = [];
   condition = true;
   // console.log("mouse released");
