@@ -113,11 +113,12 @@ class Paragraph {
     {
       noFill();
       stroke(this.color);
-      // drawingContext.setLineDash([6]);
+      strokeWeight(1);
+      drawingContext.setLineDash([6]);
       rect(this.bx - 5, this.by - 30, this.bx + 15*(this.text.length) + 20, this.by + 20);
       fill(this.color);
       noStroke();
-      // drawingContext.setLineDash([]);
+      drawingContext.setLineDash([]);
       text(this.text + caret ,this.bx,this.by)
     }
     
