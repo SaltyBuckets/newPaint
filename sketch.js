@@ -19,8 +19,8 @@ let temp = [];
 let condition = true;
 let typing = false;
 
-let backgroundColor = 150;
-let brushColor = '#ed225d';
+let backgroundColor = '#fffeed';
+let brushColor = 0;
 let brushSize;
 
 let colorPicker;
@@ -49,7 +49,7 @@ function setup() {
 
   rectMode(RADIUS);
 
-  slider = createSlider(1, 50, 10);
+  slider = createSlider(1, 50, 2);
   slider.style('width', '80px');
   slider.size(200);
 
