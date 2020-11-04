@@ -13,6 +13,7 @@ let isDrawing = false;
 let currentTool = 'brush';
 let lastTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
+let font;
 
 let temp = [];
 let condition = true;
@@ -32,13 +33,16 @@ let currentArray;
 let currentText;
 let currentLine;
 
+function preload() {
+  font = loadFont('Poppins-SemiBold.ttf');
+}
 function setup() {
   let canvas = createCanvas(windowWidth - 32, windowHeight);
   canvas.parent('#canvasContainer');
   background(0);
-
+  textFont(font);
   canvas.mousePressed(startPath);
-  canvas.mouseReleased(endPath)
+  canvas.mouseReleased(endPath);
   canvas.mouseOut(endPath);
 
   colorPicker = select('#favcolor');
@@ -56,7 +60,6 @@ function setup() {
 
   rectMode(CORNERS);
   windowResized();
-
 }
 
 function draw() {
@@ -94,10 +97,9 @@ function draw() {
       console.log('arrow');
     } else if (currentTool == 'array') {
       console.log('array');
-    } else if (currentTool == "line") {
-      console.log("line");
+    } else if (currentTool == 'line') {
+      console.log('line');
     }
-
   }
 
   showSquares();
@@ -122,7 +124,6 @@ function draw() {
   strokeWeight(2);
   stroke('#ccc'); //draw brush size indicator
   circle(mouseX, mouseY, brushSize);
-
 }
 
 function showArrays() {
@@ -199,10 +200,33 @@ function showTexts() {
       currentText.update();
       currentText.show('|');
 
+      const bbox = font.textBounds(
+        currentText.text,
+        currentText.bx,
+        currentText.by,
+        currentText.size
+      );
+
+      push();
+      drawingContext.setLineDash([6]);
+
+      let padding = 5;
+      rectMode(CORNER);
+      noFill();
+      strokeWeight(2);
+      stroke(currentText.color);
+      rect(
+        bbox.x - padding,
+        bbox.y - padding,
+        bbox.w + (padding + 8 * 2),
+        bbox.h + padding * 2
+      );
+      drawingContext.setLineDash([]);
+
+      pop();
     }
   }
 }
-
 
 function showLines() {
   for (let i = 0; i < lines.length; i++) {
@@ -292,12 +316,13 @@ function clearDrawing() {
 }
 
 function keyPressed() {
-
   if (keyCode == 8) {
     currentText.text = currentText.text.slice(0, -1);
+  } else if (keyCode == 13) {
+    currentText.text += '\n';
+  } else if (key.length == 1) {
+    currentText.text += key;
   }
-  else if (keyCode == 13) { currentText.text += '\n' }
-  else if (key.length == 1) { currentText.text += key; }
 
   return false;
 }
@@ -332,7 +357,7 @@ function activateTool(tool) {
   else if (tool == 'array') floatImg.addClass('fa fa-square-o');
 }
 function saveImage() {
-  let name = prompt("Please enter file name", "");
+  let name = prompt('Please enter file name', '');
   if (name != null) {
     saveCanvas(name, 'jpg');
   }
