@@ -14,7 +14,7 @@ let currentTool = 'brush';
 let lastTool = 'brush';
 let lockedPt = new p5.Vector(-1, 0);
 
-let temp = [];
+let tempforarr = [];
 let condition = true;
 let typing = false;
 
@@ -224,12 +224,12 @@ function startPath() {
   lockedPt.x = mouseX;
   lockedPt.y = mouseY;
 
-  temp.push(lockedPt.y);
+  tempforarr.push(lockedPt.y);
 
   currentSquare = new Square(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentCircle = new Circle(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentArrow = new Arrow(lockedPt.x, lockedPt.y, brushColor, brushSize);
-  currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize);
+  currentArray = new ArrayModule(lockedPt.x, lockedPt.y, brushColor, brushSize,tempforarr[0],condition);
   currentText = new Paragraph(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentLine = new Line(lockedPt.x, lockedPt.y, brushColor, brushSize);
   currentPath = [];
@@ -338,7 +338,7 @@ function saveImage() {
   }
 }
 function mouseReleased() {
-  temp = [];
+  tempforarr = [];
   condition = true;
   // console.log("mouse released");
 }
